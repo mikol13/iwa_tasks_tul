@@ -1,0 +1,25 @@
+<p>calculator works!</p>
+Signal Form example
+<form>
+  <div>
+    <label>a: </label>
+    <input type="number" [formField]="operationDataInputsForm.a" />
+  </div>
+  <div>
+    <label>b: </label>
+    <input type="number" [formField]="operationDataInputsForm.b" />
+  </div>
+  <h3>Addition result: {{ additionResult() }}</h3>
+</form>
+
+<hr/>
+
+RxJS Form example
+<form>
+  <input #c type="number" placeholder="c value"/>
+  <input #d type="number" placeholder="d value"/>
+  <button (click)="addition(c.valueAsNumber, d.valueAsNumber)" type="button">Addition</button>
+
+  <h3>  Result: {{result}}</h3>
+</form>
+

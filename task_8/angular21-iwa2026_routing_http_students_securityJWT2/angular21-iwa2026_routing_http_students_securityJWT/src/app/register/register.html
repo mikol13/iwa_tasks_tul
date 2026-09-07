@@ -1,0 +1,33 @@
+<section class="auth-card">
+  <p class="eyebrow">New account</p>
+  <h2>Register</h2>
+
+  @if (isSignedUp()) {
+    <p class="success-message">Registration successful. You can now <a routerLink="/auth/login">sign in</a>.</p>
+  } @else {
+    <form #formRef="ngForm" (ngSubmit)="formRef.valid && onSubmit()" novalidate>
+      <label>
+        Username
+        <input name="username" [(ngModel)]="form.username" #username="ngModel" required minlength="3" maxlength="50" />
+      </label>
+      @if (username.invalid && (username.dirty || username.touched)) {
+        <p class="field-error">Username must have 3-50 characters.</p>
+      }
+
+      <label>
+        Password
+        <input type="password" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="6" maxlength="40" />
+      </label>
+      @if (password.invalid && (password.dirty || password.touched)) {
+        <p class="field-error">Password must have 6-40 characters.</p>
+      }
+
+      <button type="submit">Create account</button>
+      @if (formRef.submitted && isSignUpFailed()) {
+        <p class="error-message">{{ errorMessage() }}</p>
+      }
+    </form>
+
+    <p class="footer-note">New accounts receive the USER role. <a routerLink="/auth/login">Go to login</a>.</p>
+  }
+</section>

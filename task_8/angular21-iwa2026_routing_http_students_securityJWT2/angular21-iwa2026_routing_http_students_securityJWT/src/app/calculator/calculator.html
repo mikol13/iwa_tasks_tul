@@ -1,0 +1,21 @@
+<section class="calculator-card">
+  <p class="eyebrow">Angular forms</p>
+  <h2>Calculator</h2>
+
+  <div class="calculator-grid">
+    <form>
+      <h3>Signal form</h3>
+      <label>a <input type="number" [formField]="operationDataInputsForm.a" /></label>
+      <label>b <input type="number" [formField]="operationDataInputsForm.b" /></label>
+      <p class="result">a + b = <strong>{{ additionResult() }}</strong></p>
+    </form>
+
+    <form>
+      <h3>Template references</h3>
+      <label>c <input #c type="number" placeholder="First value" /></label>
+      <label>d <input #d type="number" placeholder="Second value" /></label>
+      <button type="button" (click)="addition(c.valueAsNumber, d.valueAsNumber)">Add values</button>
+      <p class="result">c + d = <strong>{{ result }}</strong></p>
+    </form>
+  </div>
+</section>

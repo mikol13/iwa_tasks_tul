@@ -1,0 +1,83 @@
+:host {
+  display: block;
+}
+
+.page-header,
+.page-content,
+.session-note {
+  width: min(960px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 40px 0 20px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #3157a4;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: #5f6368;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+nav a,
+.link-button {
+  padding: 9px 12px;
+  color: #3157a4;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+nav a:hover,
+nav a.active,
+.link-button:hover {
+  color: white;
+  background: #3157a4;
+}
+
+.session-note {
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  color: #23427e;
+  background: #e8efff;
+  border-radius: 8px;
+}
+
+.page-content {
+  padding-bottom: 48px;
+}
+
+@media (max-width: 700px) {
+  .page-header {
+    align-items: start;
+    flex-direction: column;
+    padding-top: 28px;
+  }
+}

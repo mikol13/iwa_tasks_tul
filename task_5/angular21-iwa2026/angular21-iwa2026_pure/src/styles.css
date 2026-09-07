@@ -1,0 +1,129 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: #202124;
+  background: #f5f7fb;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.status-message {
+  display: inline-block;
+  margin: 0;
+  padding: 8px 12px;
+  color: #1b5e20;
+  background: #e8f5e9;
+  border-radius: 8px;
+}
+
+.exercise-card {
+  padding: 24px;
+  background: white;
+  border: 1px solid #dfe3eb;
+  border-radius: 12px;
+}
+
+.exercise-card h2,
+.exercise-card p {
+  margin-top: 0;
+}
+
+.card-description {
+  color: #5f6368;
+}
+
+.exercise-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.exercise-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.exercise-form input {
+  width: 100%;
+  padding: 11px 12px;
+  font: inherit;
+  border: 1px solid #b8bec9;
+  border-radius: 8px;
+}
+
+.exercise-form input:focus {
+  outline: 2px solid #c5cae9;
+  border-color: #3f51b5;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 500;
+  border: 1px solid #3f51b5;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.primary-button {
+  color: white;
+  background: #3f51b5;
+}
+
+.secondary-button {
+  color: #3f51b5;
+  background: white;
+}
+
+.message {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+}
+
+.message p:last-child {
+  margin-bottom: 0;
+}
+
+.result-message {
+  color: #1b5e20;
+  background: #e8f5e9;
+}
+
+.error-message {
+  color: #b71c1c;
+  background: #ffebee;
+}
+
+@media (max-width: 600px) {
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}

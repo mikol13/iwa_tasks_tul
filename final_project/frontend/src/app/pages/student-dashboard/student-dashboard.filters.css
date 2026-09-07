@@ -1,0 +1,69 @@
+.subject-card {
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  width: 100%;
+}
+
+.subject-card:hover,
+.subject-card.selected {
+  border-color: #5373d7;
+  box-shadow: 0 8px 22px #3159c51a;
+}
+
+.subject-card.selected {
+  background: #f7f9ff;
+}
+
+.filters-card {
+  align-items: end;
+  background: #fff;
+  border: 1px solid #e6ebf4;
+  border-radius: 14px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+.filters-card div {
+  display: grid;
+  gap: .35rem;
+}
+
+.filters-card label {
+  color: #41516e;
+  font-size: .78rem;
+  font-weight: 750;
+}
+
+.filters-card input,
+.filters-card select {
+  background: white;
+  border: 1px solid #dfe6f0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #2c3e5b;
+  font: inherit;
+  font-size: .86rem;
+  outline: none;
+  padding: .68rem .72rem;
+  width: 100%;
+}
+
+.filters-card input:focus,
+.filters-card select:focus {
+  border-color: #5373d7;
+  box-shadow: 0 0 0 3px #eaf0ff;
+}
+
+.grades-section {
+  scroll-margin-top: 6rem;
+}
+
+@media (max-width: 760px) {
+  .filters-card {
+    grid-template-columns: 1fr;
+  }
+}

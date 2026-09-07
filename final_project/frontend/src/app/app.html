@@ -1,0 +1,20 @@
+<header class="topbar">
+  <a class="brand" routerLink="/login" aria-label="UniGrade home">
+    <span class="brand-mark">U</span>
+    <span>Uni<span class="brand-accent">Grade</span></span>
+  </a>
+
+  @if (session.current(); as user) {
+    <nav class="main-nav" aria-label="Main navigation">
+      @if (isStudent()) { <a routerLink="/student" routerLinkActive="active">My grades</a> }
+      @if (isTeacher()) { <a routerLink="/teacher" routerLinkActive="active">Lecturer administration</a> }
+    </nav>
+    <div class="account-menu">
+      <span class="account-avatar">{{ user.username.slice(0, 1).toUpperCase() }}</span>
+      <span class="account-name">{{ user.username }}</span>
+      <button class="text-button" type="button" (click)="logout()">Sign out</button>
+    </div>
+  }
+</header>
+
+<main class="page-shell"><router-outlet /></main>

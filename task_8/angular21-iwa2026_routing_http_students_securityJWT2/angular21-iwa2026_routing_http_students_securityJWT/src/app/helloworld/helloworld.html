@@ -1,0 +1,39 @@
+<section class="welcome-card">
+  <p class="eyebrow">Home</p>
+  <h2>Hello, {{ username }}</h2>
+  <p>This page demonstrates Angular event binding used in Task 8.</p>
+
+  <div class="event-grid">
+    <label>
+      Your message
+      <input
+        #messageBox
+        type="text"
+        placeholder="Write something and press Enter"
+        (input)="onInput(messageBox.value)"
+        (keyup.enter)="onEnter(messageBox.value)"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+      />
+    </label>
+
+    <label>
+      Topic
+      <select #topicSelect (change)="onTopicChange(topicSelect.value)">
+        <option>JWT</option>
+        <option>HTTP interceptor</option>
+        <option>Route guard</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="event-result" [class.focused]="inputFocused()">
+    <strong>{{ selectedTopic() }}</strong>
+    <span>{{ typedText() || 'Your message preview will appear here.' }}</span>
+    <small>{{ eventMessage() }}</small>
+  </div>
+
+  <button type="button" (click)="clearMessage()">Clear message</button>
+
+  <p class="event-note">Events included: input, keyup.enter, focus, blur, change and click.</p>
+</section>

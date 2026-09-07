@@ -1,0 +1,40 @@
+<section class="exercise-card">
+  <h2>Quadratic equation</h2>
+  <p class="card-description">Solve ax² + bx + c = 0.</p>
+
+  <form class="exercise-form">
+    <div class="field-grid">
+      <div>
+        <label for="coefficient-a">Coefficient a</label>
+        <input id="coefficient-a" name="a" type="number" placeholder="a" [(ngModel)]="a" (keypress)="onKeyPress($event)" />
+      </div>
+      <div>
+        <label for="coefficient-b">Coefficient b</label>
+        <input id="coefficient-b" name="b" type="number" placeholder="b" [(ngModel)]="b" (keypress)="onKeyPress($event)" />
+      </div>
+      <div>
+        <label for="coefficient-c">Coefficient c</label>
+        <input id="coefficient-c" name="c" type="number" placeholder="c" [(ngModel)]="c" (keypress)="onKeyPress($event)" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="primary-button" type="button" (click)="solve()" [disabled]="isCalculating()">
+        {{ isCalculating() ? 'Solving...' : 'Solve' }}
+      </button>
+      <button class="secondary-button" type="button" (click)="reset()">Reset</button>
+    </div>
+  </form>
+
+  <p *ngIf="error()" class="message error-message">Error: {{ error() }}</p>
+
+  <div *ngIf="resultMessage()" class="message result-message">
+    <p><strong>{{ resultMessage() }}</strong></p>
+    <p *ngIf="delta() !== null">Discriminant (Δ): {{ delta() }}</p>
+    <p *ngIf="roots()?.length === 1">Solution: x = {{ roots()![0] | number: '1.0-6' }}</p>
+    <p *ngIf="roots()?.length === 2">
+      x₁ = {{ roots()![0] | number: '1.0-6' }},
+      x₂ = {{ roots()![1] | number: '1.0-6' }}
+    </p>
+  </div>
+</section>

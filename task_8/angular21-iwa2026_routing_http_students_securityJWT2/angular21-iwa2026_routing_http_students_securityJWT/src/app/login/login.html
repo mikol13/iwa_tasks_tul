@@ -1,0 +1,33 @@
+<section class="auth-card">
+  <p class="eyebrow">Authentication</p>
+  <h2>Sign in</h2>
+
+  @if (isLoggedIn()) {
+    <p class="success-message">You are already signed in with {{ roles().join(', ') }}.</p>
+  } @else {
+    <form #formRef="ngForm" (ngSubmit)="formRef.valid && onSubmit()" novalidate>
+      <label>
+        Username
+        <input name="username" [(ngModel)]="form.username" #username="ngModel" required minlength="3" />
+      </label>
+      @if (username.invalid && (username.dirty || username.touched)) {
+        <p class="field-error">Username must have at least 3 characters.</p>
+      }
+
+      <label>
+        Password
+        <input type="password" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="6" />
+      </label>
+      @if (password.invalid && (password.dirty || password.touched)) {
+        <p class="field-error">Password must have at least 6 characters.</p>
+      }
+
+      <button type="submit">Sign in</button>
+      @if (formRef.submitted && isLoginFailed()) {
+        <p class="error-message">{{ errorMessage() }}</p>
+      }
+    </form>
+
+    <p class="footer-note">No account yet? <a routerLink="/signup">Create one</a>.</p>
+  }
+</section>

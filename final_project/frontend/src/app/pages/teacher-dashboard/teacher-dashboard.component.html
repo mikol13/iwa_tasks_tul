@@ -1,0 +1,109 @@
+@if (dashboard(); as data) {
+  <section class="hero">
+    <div>
+      <span class="eyebrow">LECTURER ADMINISTRATION</span>
+      <h1>Welcome, {{ data.teacherName }}!</h1>
+      <p>Create subjects and assign grades to students in your university groups.</p>
+    </div>
+    <div class="stat-list">
+      <div><strong>{{ data.students.length }}</strong><span>students</span></div>
+      <div><strong>{{ data.subjects.length }}</strong><span>subjects</span></div>
+    </div>
+  </section>
+
+  <section class="dashboard-grid">
+    <article class="entry-card">
+      <div class="card-title"><div><span class="eyebrow">GRADING</span><h2>Assign a grade</h2></div><span class="edit-icon">✎</span></div>
+      <form #gradeForm="ngForm" (ngSubmit)="addGrade()">
+        <label for="student">Student</label>
+        <select id="student" name="student" [(ngModel)]="studentId" required>
+          @for (student of data.students; track student.id) {
+            <option [ngValue]="student.id">{{ student.fullName }} · {{ student.groupName }}</option>
+          }
+        </select>
+
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject" [(ngModel)]="subjectId" required>
+          @for (subject of data.subjects; track subject.id) {
+            <option [ngValue]="subject.id">{{ subject.name }} · {{ subject.groupName }}</option>
+          }
+        </select>
+
+        <div class="form-row">
+          <div>
+            <label for="value">Grade</label>
+            <select id="value" name="value" [(ngModel)]="value" required>
+              @for (gradeValue of [5, 4, 3, 2]; track gradeValue) {
+                <option [ngValue]="gradeValue">{{ gradeValue }}</option>
+              }
+            </select>
+          </div>
+          <div class="grade-preview"><span>Selected grade</span><b [class]="gradeTone(value)">{{ value }}</b></div>
+        </div>
+
+        <label for="comment">Comment <small>(optional)</small></label>
+        <input id="comment" name="comment" [(ngModel)]="comment" maxlength="140" placeholder="e.g. REST API project" />
+        @if (gradeMessage()) { <p class="success-message">{{ gradeMessage() }}</p> }
+        <button class="primary-button" type="submit" [disabled]="loadingGrade() || gradeForm.invalid">
+          {{ loadingGrade() ? 'Saving…' : 'Save grade' }}
+        </button>
+      </form>
+    </article>
+
+    <article class="entry-card">
+      <div class="card-title"><div><span class="eyebrow">ADMINISTRATION</span><h2>Create a subject</h2></div><span class="edit-icon">＋</span></div>
+      <form #subjectForm="ngForm" (ngSubmit)="addSubject(subjectForm)">
+        <label for="subject-name">Subject name</label>
+        <input
+          id="subject-name"
+          name="subjectName"
+          [(ngModel)]="subjectName"
+          #subjectNameModel="ngModel"
+          required
+          minlength="2"
+          maxlength="80"
+          placeholder="e.g. Distributed Systems" />
+        @if (subjectNameModel.invalid && subjectNameModel.touched) {
+          <p class="error-message">Enter a subject name containing 2–80 characters.</p>
+        }
+
+        <label for="group">University group</label>
+        <select id="group" name="groupId" [(ngModel)]="groupId" required>
+          @for (group of data.groups; track group.id) {
+            <option [ngValue]="group.id">{{ group.name }}</option>
+          }
+        </select>
+        @if (subjectMessage()) { <p class="success-message">{{ subjectMessage() }}</p> }
+        <button class="primary-button" type="submit" [disabled]="loadingSubject() || subjectForm.invalid">
+          {{ loadingSubject() ? 'Creating…' : 'Create subject' }}
+        </button>
+      </form>
+    </article>
+
+    <aside class="class-card">
+      <span class="eyebrow">YOUR GROUPS</span><h2>Students</h2>
+      <div class="student-list">
+        @for (student of data.students; track student.id) {
+          <div class="student-row"><span class="student-avatar">{{ student.fullName.slice(0,1) }}</span><div><strong>{{ student.fullName }}</strong><small>{{ student.groupName }}</small></div><span class="row-arrow">›</span></div>
+        } @empty {
+          <p class="empty-state">Create a subject for a group to see its students.</p>
+        }
+      </div>
+    </aside>
+  </section>
+
+  @if (errorMessage()) { <p class="page-error">{{ errorMessage() }}</p> }
+
+  <section class="recent-section">
+    <div class="section-heading"><div><span class="eyebrow">HISTORY</span><h2>Recently assigned grades</h2></div><span class="recent-count">{{ data.recentGrades.length }} entries</span></div>
+    <div class="recent-list">
+      @for (grade of data.recentGrades; track grade.id) {
+        <article class="recent-row"><span [class]="'grade-badge ' + gradeTone(grade.value)">{{ grade.value }}</span><div class="recent-main"><strong>{{ grade.subject }}</strong><span>{{ grade.comment || 'No comment' }}</span></div><div class="recent-meta"><strong>{{ grade.teacher }}</strong><span>{{ grade.issuedOn | date:'dd.MM.yyyy' }}</span></div></article>
+      } @empty {
+        <p class="empty-state">No grades have been assigned yet.</p>
+      }
+    </div>
+  </section>
+} @else {
+  <section class="message-card"><div class="loader"></div><p>Loading lecturer administration…</p>@if (errorMessage()) { <span class="error-message">{{ errorMessage() }}</span> }</section>
+}

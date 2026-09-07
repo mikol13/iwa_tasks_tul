@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.access-card {
+  padding: 28px;
+  background: white;
+  border: 1px solid #dce1ea;
+  border-radius: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #8c4a00;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 0 0 18px;
+  font-size: 2rem;
+}
+
+.server-message,
+.error-message {
+  margin: 0;
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.server-message {
+  color: #7a3d00;
+  background: #fff3e0;
+}
+
+.error-message {
+  color: #b3261e;
+  background: #ffebee;
+}

@@ -1,0 +1,73 @@
+<section class="students-card">
+  <header>
+    <p class="eyebrow">Angular HttpClient + Spring Boot</p>
+    <h2>Students</h2>
+    <p>Use all fields for POST and PUT. PATCH uses only the fields you fill in.</p>
+  </header>
+
+  <p *ngIf="message()" class="message" [ngClass]="messageType()" role="status">
+    {{ message() }}
+  </p>
+
+  <div class="student-form">
+    <label>
+      First name
+      <input #studentFirstName placeholder="Anna" />
+    </label>
+    <label>
+      Last name
+      <input #studentLastName placeholder="Nowak" />
+    </label>
+    <label>
+      Email
+      <input #studentEmail type="email" placeholder="anna@example.com" />
+    </label>
+    <label>
+      Telephone
+      <input #studentTelephone type="tel" placeholder="123456789" />
+    </label>
+  </div>
+
+  <button
+    class="primary"
+    type="button"
+    (click)="add(studentFirstName.value, studentLastName.value, studentEmail.value, studentTelephone.value)"
+  >
+    Add student (POST)
+  </button>
+
+  <div class="student-list">
+    @for (student of studentList(); track student.id) {
+      <article class="student-item">
+        <div>
+          <strong>{{ student.firstname }} {{ student.lastname }}</strong>
+          <span>ID: {{ student.id }} · {{ student.email }} · {{ student.telephone }}</span>
+        </div>
+
+        <div class="row-actions">
+          <button type="button" (click)="update(studentFirstName.value, studentLastName.value, studentEmail.value, studentTelephone.value, student)">
+            PUT
+          </button>
+          <button type="button" (click)="patchStudent(studentFirstName.value, studentLastName.value, studentEmail.value, studentTelephone.value, student)">
+            PATCH
+          </button>
+          <button class="danger" type="button" (click)="delete(student)">Delete</button>
+        </div>
+      </article>
+    } @empty {
+      <p class="empty-state">The collection is empty.</p>
+    }
+  </div>
+
+  @if (studentList().length > 0) {
+    <div class="collection-actions">
+      <button
+        type="button"
+        (click)="replaceAll(studentFirstName.value, studentLastName.value, studentEmail.value, studentTelephone.value)"
+      >
+        PUT all
+      </button>
+      <button class="danger" type="button" (click)="deleteAll()">Delete all</button>
+    </div>
+  }
+</section>

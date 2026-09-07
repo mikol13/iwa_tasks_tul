@@ -1,0 +1,77 @@
+:host {
+  display: block;
+}
+
+.calculator-card {
+  width: 100%;
+  border-radius: 12px;
+}
+
+mat-card-content {
+  padding-top: 16px;
+}
+
+section {
+  padding: 8px 0 20px;
+}
+
+section + section {
+  padding-top: 24px;
+}
+
+h3 {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.calculator-form,
+.input-row,
+.button-row {
+  display: flex;
+  gap: 12px;
+}
+
+.calculator-form {
+  flex-direction: column;
+}
+
+.input-row {
+  flex-wrap: wrap;
+}
+
+mat-form-field {
+  flex: 1 1 180px;
+}
+
+.button-row {
+  flex-wrap: wrap;
+}
+
+.result,
+.error {
+  margin: 4px 0 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+.result {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.error {
+  background: #ffebee;
+  color: #b71c1c;
+}
+
+@media (max-width: 600px) {
+  .input-row,
+  .button-row {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+}

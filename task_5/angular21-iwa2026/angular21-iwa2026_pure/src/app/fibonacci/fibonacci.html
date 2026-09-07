@@ -1,0 +1,30 @@
+<section class="exercise-card">
+  <h2>Fibonacci sequence</h2>
+  <p class="card-description">Calculate a value at a selected position.</p>
+
+  <form class="exercise-form">
+    <div>
+      <label for="position">Position (0–100)</label>
+      <input
+        id="position"
+        name="position"
+        type="number"
+        min="0"
+        max="100"
+        placeholder="For example: 10"
+        [(ngModel)]="position"
+        (keypress)="onKeyPress($event)"
+      />
+    </div>
+
+    <div class="actions">
+      <button class="primary-button" type="button" (click)="calculateFibonacci()" [disabled]="isCalculating()">
+        {{ isCalculating() ? 'Calculating...' : 'Calculate' }}
+      </button>
+      <button class="secondary-button" type="button" (click)="reset()">Reset</button>
+    </div>
+  </form>
+
+  <p *ngIf="error()" class="message error-message">Error: {{ error() }}</p>
+  <p *ngIf="result() !== null" class="message result-message">Result: <strong>{{ result() }}</strong></p>
+</section>

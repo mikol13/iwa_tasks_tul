@@ -1,0 +1,33 @@
+<section class="login-layout">
+  <div class="welcome-panel">
+    <span class="eyebrow">UNIVERSITY PORTAL</span>
+    <h1>Your subjects and grades<br />in one <em>simple place.</em></h1>
+    <p>A clear university record system for students and lecturers. Review grades, manage subjects and keep academic information organised.</p>
+    <div class="feature-list">
+      <div><span>✓</span> Students see only their own grades</div>
+      <div><span>✓</span> Lecturers create subjects and assign grades</div>
+      <div><span>✓</span> JWT-secured role-specific views</div>
+    </div>
+  </div>
+
+  <div class="login-card">
+    <div class="card-heading"><span class="small-logo">U</span><div><h2>Sign in</h2><p>Open your university dashboard.</p></div></div>
+    <form #loginForm="ngForm" (ngSubmit)="signIn(loginForm)">
+      <label for="username">Username</label>
+      <input id="username" name="username" [(ngModel)]="username" #usernameModel="ngModel" autocomplete="username" required minlength="3" />
+      @if (usernameModel.invalid && usernameModel.touched) { <p class="form-error">Enter at least 3 characters.</p> }
+      <label for="password">Password</label>
+      <input id="password" name="password" [(ngModel)]="password" #passwordModel="ngModel" type="password" autocomplete="current-password" required minlength="6" />
+      @if (passwordModel.invalid && passwordModel.touched) { <p class="form-error">Enter at least 6 characters.</p> }
+      @if (errorMessage()) { <p class="form-error">{{ errorMessage() }}</p> }
+      <button class="primary-button" type="submit" [disabled]="loading() || loginForm.invalid">{{ loading() ? 'Signing in…' : 'Sign in' }}</button>
+    </form>
+    <div class="demo-box">
+      <p>Demo accounts</p>
+      <div class="demo-actions">
+        <button type="button" (click)="useDemo('jan.student', 'student123')"><strong>Student</strong><small>jan.student</small></button>
+        <button type="button" (click)="useDemo('anna.teacher', 'teacher123')"><strong>Lecturer</strong><small>anna.teacher</small></button>
+      </div>
+    </div>
+  </div>
+</section>

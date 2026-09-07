@@ -1,0 +1,46 @@
+<section class="students-card">
+  <header>
+    <p class="eyebrow">Protected API</p>
+    <h2>Students</h2>
+    <p>USER can read this list. ADMIN can also add, update and delete students.</p>
+  </header>
+
+  @if (message()) {
+    <p class="message" [class.success]="messageType() === 'success'" [class.error]="messageType() === 'error'">{{ message() }}</p>
+  }
+
+  <div class="student-form" [class.read-only]="!canEdit()">
+    <label>First name <input #studentFirstName placeholder="Anna" [disabled]="!canEdit()" /></label>
+    <label>Last name <input #studentLastName placeholder="Nowak" [disabled]="!canEdit()" /></label>
+    <label>Email <input #studentEmail type="email" placeholder="anna@example.com" [disabled]="!canEdit()" /></label>
+    <label>Telephone <input #studentTelephone type="tel" placeholder="123456789" [disabled]="!canEdit()" /></label>
+  </div>
+  @if (canEdit()) {
+    <button class="primary" type="button" (click)="add(studentFirstName.value, studentLastName.value, studentEmail.value, studentTelephone.value)">Add student</button>
+  }
+
+  <div class="student-list">
+    @for (student of studentList(); track student.id) {
+      <article class="student-item">
+        <div>
+          <strong>{{ student.firstname }} {{ student.lastname }}</strong>
+          <span>ID: {{ student.id }} · {{ student.email }} · {{ student.telephone }}</span>
+        </div>
+        @if (canEdit()) {
+          <div class="row-actions">
+            <button type="button" (click)="update(studentFirstName.value, studentLastName.value, studentEmail.value, studentTelephone.value, student)">Update</button>
+            <button class="danger" type="button" (click)="delete(student)">Delete</button>
+          </div>
+        }
+      </article>
+    } @empty {
+      <p class="empty-state">The collection is empty.</p>
+    }
+  </div>
+
+  @if (canEdit() && studentList().length > 0) {
+    <div class="collection-actions">
+      <button class="danger" type="button" (click)="deleteAll()">Delete all</button>
+    </div>
+  }
+</section>

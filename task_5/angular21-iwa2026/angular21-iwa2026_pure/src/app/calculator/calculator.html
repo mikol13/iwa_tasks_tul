@@ -1,0 +1,67 @@
+<mat-card class="calculator-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Calculator</mat-card-title>
+    <mat-card-subtitle>Angular signals and event binding</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <section>
+      <h3>Signal Form example</h3>
+      <form class="calculator-form">
+        <div class="input-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Value a</mat-label>
+            <input matInput type="number" [formField]="operationDataInputsForm.a" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Value b</mat-label>
+            <input matInput type="number" [formField]="operationDataInputsForm.b" />
+          </mat-form-field>
+        </div>
+
+        <p class="result">Addition result: <strong>{{ additionResult() }}</strong></p>
+      </form>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section>
+      <h3>Event binding example</h3>
+      <form class="calculator-form">
+        <div class="input-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Value c</mat-label>
+            <input #c matInput type="number" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Value d</mat-label>
+            <input #d matInput type="number" />
+          </mat-form-field>
+        </div>
+
+        <div class="button-row">
+          <button mat-flat-button type="button" (click)="addition(c.valueAsNumber, d.valueAsNumber)">
+            Addition
+          </button>
+          <button mat-stroked-button type="button" (click)="subtraction(c.valueAsNumber, d.valueAsNumber)">
+            Subtraction
+          </button>
+          <button mat-stroked-button type="button" (click)="multiplication(c.valueAsNumber, d.valueAsNumber)">
+            Multiplication
+          </button>
+          <button mat-stroked-button type="button" (click)="division(c.valueAsNumber, d.valueAsNumber)">
+            Division
+          </button>
+        </div>
+
+        @if (errorMessage) {
+          <p class="error" role="alert">{{ errorMessage }}</p>
+        } @else if (result !== null) {
+          <p class="result">Result: <strong>{{ result }}</strong></p>
+        }
+      </form>
+    </section>
+  </mat-card-content>
+</mat-card>

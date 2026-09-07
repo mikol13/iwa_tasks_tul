@@ -1,0 +1,34 @@
+<header class="page-header">
+  <div>
+    <p class="eyebrow">Angular · JWT · route guards</p>
+    <h1>{{ title }}</h1>
+    <p class="subtitle">A small frontend for the secured Spring Boot API.</p>
+  </div>
+
+  <nav aria-label="Main navigation">
+    <a routerLink="/hello" routerLinkActive="active">Home</a>
+    <a routerLink="/calculator" routerLinkActive="active">Calculator</a>
+    @if (authority()) {
+      <a routerLink="/students" routerLinkActive="active">Students</a>
+      <a routerLink="/user" routerLinkActive="active">User area</a>
+    }
+    @if (authority() === 'admin') {
+      <a routerLink="/admin" routerLinkActive="active">Admin area</a>
+    }
+    @if (!authority()) {
+      <a routerLink="/auth/login" routerLinkActive="active">Login</a>
+      <a routerLink="/signup" routerLinkActive="active">Register</a>
+    } @else {
+      <button type="button" class="link-button" (click)="logout()">Sign out</button>
+    }
+  </nav>
+</header>
+
+@if (authority()) {
+  <p class="session-note">Signed in as <strong>{{ username() }}</strong> · {{ authority() }}</p>
+}
+
+<main class="page-content">
+  <router-outlet />
+</main>
+

@@ -1,0 +1,99 @@
+@if (dashboard(); as data) {
+  <section class="hero">
+    <div>
+      <span class="eyebrow">STUDENT PORTAL</span>
+      <h1>Welcome, {{ data.studentName }}!</h1>
+      <p>University group <strong>{{ data.groupName }}</strong> · review your subjects and grades.</p>
+    </div>
+    <div class="average-card">
+      <span>Grade average</span><strong>{{ average() }}</strong><small>{{ data.grades.length }} recorded grades</small>
+    </div>
+  </section>
+
+  <section class="subject-section">
+    <div class="section-heading">
+      <div><span class="eyebrow">OVERVIEW</span><h2>Your subjects</h2></div>
+      <span class="muted">Choose a subject to see its grades</span>
+    </div>
+    <div class="subjects-grid">
+      @for (subject of summaries(); track subject.name) {
+        <button
+          class="subject-card"
+          [class.selected]="selectedSubject() === subject.name"
+          type="button"
+          (click)="selectSubject(subject.name)">
+          <div class="subject-top"><span>{{ subject.name }}</span><b>{{ subject.average.toFixed(2) }}</b></div>
+          <div class="grade-chips">
+            @for (grade of subject.grades; track grade.id) {
+              <span [class]="'grade-chip ' + gradeTone(grade.value)">{{ grade.value }}</span>
+            }
+          </div>
+          <p>{{ subject.grades.length }} recorded {{ subject.grades.length === 1 ? 'grade' : 'grades' }}</p>
+        </button>
+      } @empty {
+        <article class="empty-card">You do not have any assigned subjects yet.</article>
+      }
+    </div>
+  </section>
+
+  <section class="filters-card" aria-label="Grade search and sorting">
+    <div>
+      <label for="grade-search">Search grades</label>
+      <input
+        #searchBox
+        id="grade-search"
+        type="search"
+        placeholder="Subject, lecturer or comment"
+        (input)="setSearch(searchBox.value)"
+        (keyup.enter)="showMatchingGrades()" />
+    </div>
+    <div>
+      <label for="subject-filter">Subject</label>
+      <select #subjectFilter id="subject-filter" (change)="setSubject(subjectFilter.value)">
+        <option value="all">All subjects</option>
+        @for (subject of summaries(); track subject.name) {
+          <option [value]="subject.name" [selected]="selectedSubject() === subject.name">{{ subject.name }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label for="grade-sort">Sort by</label>
+      <select #gradeSort id="grade-sort" (change)="setSort(gradeSort.value)">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+        <option value="highest">Highest grade</option>
+        <option value="lowest">Lowest grade</option>
+        <option value="subject">Subject name</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="grades-section" id="grade-results">
+    <div class="section-heading">
+      <div><span class="eyebrow">DETAILS</span><h2>Matching grades</h2></div>
+      <span class="muted">{{ visibleGrades().length }} results</span>
+    </div>
+    <div class="grades-table-wrap">
+      <table>
+        <thead><tr><th>Grade</th><th>Subject</th><th>Comment</th><th>Lecturer</th><th>Date</th></tr></thead>
+        <tbody>
+          @for (grade of visibleGrades(); track grade.id) {
+            <tr>
+              <td><span [class]="'grade-badge ' + gradeTone(grade.value)">{{ grade.value }}</span></td>
+              <td><strong>{{ grade.subject }}</strong></td>
+              <td>{{ grade.comment || '—' }}</td>
+              <td>{{ grade.teacher }}</td>
+              <td>{{ grade.issuedOn | date:'dd.MM.yyyy' }}</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="no-data">No grades match the selected filters.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+} @else if (errorMessage()) {
+  <section class="message-card error"><h2>Something went wrong</h2><p>{{ errorMessage() }}</p><a routerLink="/login">Return to login</a></section>
+} @else {
+  <section class="message-card"><div class="loader"></div><p>Loading university records…</p></section>
+}
